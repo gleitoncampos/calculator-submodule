@@ -14,7 +14,7 @@ resource "aws_s3_bucket_acl" "bucket_acl" {
 }
 # block public access :
 resource "aws_s3_bucket_public_access_block" "public_block" {
-  bucket = aws_s3_bucket.bucket.id
+  bucket                  = aws_s3_bucket.bucket.id
   block_public_acls       = true
   block_public_policy     = true
   restrict_public_buckets = true
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 }
 #upload website files to s3:
 resource "aws_s3_object" "object" {
-  bucket = aws_s3_bucket.bucket.id
+  bucket       = aws_s3_bucket.bucket.id
   for_each     = fileset("${var.build_folder}", "*")
   key          = "website/${each.value}"
   source       = "${var.build_folder}/${each.value}"
