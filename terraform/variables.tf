@@ -11,7 +11,7 @@ variable "bucket_prefix" {
 variable "domain_name" {
   type        = string
   description = "The domain name to use"
-  default     = "calculator.gleitoncampos.cf"
+  default     = "gleitoncampos.cf"
 }
 variable "service_name" {
   type        = string
