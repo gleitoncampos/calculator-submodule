@@ -1,4 +1,4 @@
-name: 'Terraform Init and Plan'
+name: 'Build  & Deploy'
 
 on:
   workflow_dispatch:
