@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "gleitoncampos-terraform-backend"
-    region = "us-east-1"
+    region = ""
     key = "calculator-submodule/"
   }
   required_providers {
