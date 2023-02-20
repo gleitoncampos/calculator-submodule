@@ -1,9 +1,3 @@
-variable "s3_backend" {
-  type        = string
-  description = "Bucket to be used as backend"
-  default     = "gleitoncampos-terraform-backend" 
-}
-
 variable "region" {
   type        = string
   description = "The AWS Region to use"
