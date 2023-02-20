@@ -22,10 +22,11 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build the static
+      working-directory: ./app
       run: |
         docker run \
         -v ${{ github.workspace }}/calculator:/app \
-        node:15 /bin/bash -c "cd ./app && npm install --prefix ./app && yarn build"
+        node:15 /bin/bash -c "npm install && yarn build"
 
 
   terraform:
