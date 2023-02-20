@@ -1,2 +1,4 @@
 /terraform/.terraform/
 .terraform*
+/calculator/build/
+/calculator/node_modules/
