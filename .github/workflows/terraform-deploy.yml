@@ -24,8 +24,8 @@ jobs:
     - name: Build the static
       run: |
         docker run \
-        -v ${{ github.workspace }}/calculator:/ \
-        node:15 /bin/bash -c "npm install && yarn build"
+        -v ${{ github.workspace }}/calculator:/app \
+        node:15 /bin/bash -c "cd /app && npm install && yarn build"
 
 
   terraform:
