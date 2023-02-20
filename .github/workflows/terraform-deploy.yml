@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: action/checkout@v3
+    - uses: actions/checkout@v3
     - name: Build the static
       run: |
         docker run \
@@ -29,6 +29,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
+    needs: build
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
