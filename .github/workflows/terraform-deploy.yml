@@ -24,7 +24,7 @@ jobs:
         submodules: recursive
 
     - name: Build the static
-      run: docker run -v ${{ github.workspace }}/calculator:/app node:15 /bin/bash -c "cd /app && npm install && yarn build && cd ./build && mkdir -p ./build && move *.* ./build/"
+      run: docker run -v ${{ github.workspace }}/calculator:/app node:15 /bin/bash -c "cd /app && npm install && yarn build && cd ./build && ls -lah && mkdir -p ./build && mv *.* ./build/"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
