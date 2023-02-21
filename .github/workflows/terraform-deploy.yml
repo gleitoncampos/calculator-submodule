@@ -54,6 +54,9 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build_folder
+    
+    - name: Check workspace
+      run: pwd && ls -lah
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
