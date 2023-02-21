@@ -51,6 +51,7 @@ jobs:
         submodules: recursive
 
     - name: Download artifact
+      working-directory: ./terraform/build
       uses: actions/download-artifact@v2
       with:
         name: build_folder
