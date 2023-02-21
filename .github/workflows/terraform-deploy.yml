@@ -26,6 +26,12 @@ jobs:
     - name: Build the static
       run: docker run -v ${{ github.workspace }}/calculator:/app node:15 /bin/bash -c "cd /app && npm install && yarn build"
 
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: build_folder
+        path: ${{ github.workspace }}/calculator/build
+
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -38,6 +44,16 @@ jobs:
         shell: bash
 
     steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: build_folder
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
