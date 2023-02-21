@@ -26,12 +26,6 @@ jobs:
     - name: Build the static
       run: docker run -v ${{ github.workspace }}/calculator:/app node:15 /bin/bash -c "cd /app && npm install && yarn build"
 
-    - name: Upload build folder
-      uses: actions/upload-artifact@v2
-      with:
-        name: build_folder
-        path: calculator/build
-
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
@@ -44,40 +38,26 @@ jobs:
         shell: bash
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
 
-     - name: Download build folder
-       working-directory: terraform
-       uses: actions/download-artifact@v2
-       with:
-         name: build_folder
-    
-      - name: Checking workspace
-        run: |
-          pwd && ls -lah
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
 
-      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        working-directory: terraform
-        run: terraform init 
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init 
       
 
-      # Checks that all Terraform configuration files adhere to a canonical format
-      - name: Terraform Format
-        working-directory: terraform
-        run: terraform fmt -check
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: ./terraform
+      run: terraform fmt -check
 
-      # Generates an execution plan for Terraform
-      - name: Terraform Plan
-        working-directory: terraform
-        run: terraform plan -input=false
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan -input=false
 
  # On push to "master", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
