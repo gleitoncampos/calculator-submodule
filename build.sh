@@ -1,6 +1,7 @@
 #!/bin/bash
-set +x
+set -x
 echo "Listing worksapce"
+echo "$(pwd)"
 cd ./calculator || return 1
 echo "$(pwd)"
 echo "$(ls -lah)"
