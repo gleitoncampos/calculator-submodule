@@ -27,7 +27,7 @@ jobs:
       run: docker run -v ${{ github.workspace }}/calculator:/app node:15 /bin/bash -c "cd /app && npm install && yarn build"
 
     - name: Move files
-      run: cd ${{ github.workspace }}/calculator/build && mkdir build && mv * ./build
+      run: cd ${{ github.workspace }}/calculator/build && mkdir ./build && mv * ./build
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
