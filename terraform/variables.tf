@@ -21,5 +21,5 @@ variable "service_name" {
 variable "build_folder" {
   type        = string
   description = "The folder that build artifacts are available to upload do s3"
-  default     = "calculator/build/"
+  default     = "./build/"
 }
