@@ -5,8 +5,8 @@ on:
 
 permissions:
   contents: read
-  issues: read|write
-  statuses: read|write
+  issues: write
+  statuses: write
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
