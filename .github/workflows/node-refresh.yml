@@ -10,7 +10,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-east-1'
-  NODE_DEFAULT_VERSION: '15'
 
 jobs:
   Build:
@@ -26,10 +25,10 @@ jobs:
         working-directory: ./calculator
         run: ls -lah
 
-      - name: Use Node.js ${{ NODE_DEFAULT_VERSION }}
+      - name: Use Node.js 15
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ NODE_DEFAULT_VERSION }}
+          node-version: 15
       
       - name: Installing dependencies
         working-directory: ./calculator
@@ -46,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: node ${{ NODE_DEFAULT_VERSION }}
+          name: node
           path: ${{ github.workspace }}/calculator/build
       
   Front_refresh:
@@ -60,7 +59,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: node ${{ NODE_DEFAULT_VERSION }}
+          name: node
           path: build
       - name: Listing files
         run: ls -lah ./build
