@@ -26,10 +26,10 @@ jobs:
         working-directory: ./calculator
         run: ls -lah
 
-      - name: Use Node.js ${{ NODE_DEFAULT_VERSION }}
+      - name: Use Node.js $NODE_DEFAULT_VERSION
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ NODE_DEFAULT_VERSION }}
+          node-version: $NODE_DEFAULT_VERSION
       
       - name: Installing dependencies
         working-directory: ./calculator
