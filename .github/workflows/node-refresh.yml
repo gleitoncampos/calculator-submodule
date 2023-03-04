@@ -29,7 +29,7 @@ jobs:
       - name: Use Node.js $NODE_DEFAULT_VERSION
         uses: actions/setup-node@v3
         with:
-          node-version: $NODE_DEFAULT_VERSION
+          node-version: 15
       
       - name: Installing dependencies
         working-directory: ./calculator
@@ -51,6 +51,7 @@ jobs:
       
   Front_refresh:
     runs-on: ubuntu-latest
+    needs: Build
 
     steps:
       - name: Create build folder
