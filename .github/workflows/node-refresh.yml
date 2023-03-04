@@ -27,12 +27,7 @@ jobs:
           submodules: recursive
     
       - name: Listing files
-        run: ls -lah
-
-      - name: Enter in folder
-        run: cd ${{ github.workspace }}/calculator && ls -lah
-      
-      - name: Listing files
+        working-directory: ./calculator
         run: ls -lah
 
       - name: Use Node.js ${{ matrix.node-version }}
@@ -41,13 +36,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Installing dependencies
-        run: cd ${{ github.workspace }}/calculator && npm install
+        working-directory: ./calculator
+        run:  npm install
 
       - name: Running Build
-        run: cd ${{ github.workspace }}/calculator && npm run build --if-present
+        working-directory: ./calculator
+        run: npm run build --if-present
 
       - name: Running Tests
-        run: cd ${{ github.workspace }}/calculator && npm test
+        working-directory: ./calculator
+        run: npm test
 
       - name: Listing files
+        working-directory: ./calculator
         run: ls -lah
