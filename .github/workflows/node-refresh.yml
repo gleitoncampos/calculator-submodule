@@ -28,6 +28,9 @@ jobs:
 
       - name: Enter in folder
         run: cd ${{ github.workspace }}/calculator
+      
+      - name: Listing files
+        run: ls -lah
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
