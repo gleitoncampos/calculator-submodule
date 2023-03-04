@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: action/checkout@v3
+        with:
+        submodules: recursive
 
       - name: Enter in folder
         run: cd ${{ github.workspace }}/calculator
