@@ -10,15 +10,11 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: 'us-east-1'
+  NODE_DEFAULT_VESION: 15
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [ 12, 14, 15 ]
-
 
     steps:
       - name: Checkout
@@ -30,11 +26,11 @@ jobs:
         working-directory: ./calculator
         run: ls -lah
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ NODE_DEFAULT_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-
+          node-version: ${{ NODE_DEFAULT_VERSION }}
+      
       - name: Installing dependencies
         working-directory: ./calculator
         run:  npm install
@@ -47,6 +43,26 @@ jobs:
         working-directory: ./calculator
         run: npm test
 
-      - name: Listing files
+      - name: Upload artifact
         working-directory: ./calculator
+        uses: actions/upload-artifact@v2
+        with:
+          name: node ${{ NODE_DEFAULT_VERSION }}
+          path: build
+      
+  Front_refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create build folder
+        run: mkdir build
+      
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: node ${{ NODE_DEFAULT_VERSION }}
+          path: build
+      - name: Listing files
         run: ls -lah
+
+
