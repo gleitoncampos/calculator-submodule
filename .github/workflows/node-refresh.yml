@@ -25,9 +25,8 @@ jobs:
         uses: action/checkout@v3
 
       - name: Enter in folder
-        uses: ubuntu-latest
         run: cd ${{ github.workspace }}/calculator
-        
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
