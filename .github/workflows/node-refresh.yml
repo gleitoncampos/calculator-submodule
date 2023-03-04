@@ -60,7 +60,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
-          name: node ${{ NODE_DEFAULT_VERSION }}
+          name: node_$NODE_DEFAULT_VERSION
           path: build
       - name: Listing files
         run: ls -lah
