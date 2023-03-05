@@ -1,4 +1,4 @@
-name: 'First Build & Deploy'
+name: '1. First Build & Deploy'
 
 on:
   workflow_dispatch:

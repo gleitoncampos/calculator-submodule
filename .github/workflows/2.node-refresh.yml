@@ -1,4 +1,4 @@
-name: Front Update
+name: '2. Front refresh'
 
 on:
   push:
