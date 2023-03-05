@@ -27,6 +27,12 @@ resource "aws_cloudfront_distribution" "cf_dist" {
       }
     }
   }
+  restrictions {
+    geo_restriction {
+      restriction_type = "whitelist"
+      locations        = ["IN", "US", "CA", "BR"]
+    }
+  }
   tags = {
     "Project"   = "hands-on.cloud"
     "ManagedBy" = "Terraform"
