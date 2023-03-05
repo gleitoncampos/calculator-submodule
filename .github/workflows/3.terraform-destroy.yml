@@ -44,19 +44,20 @@ jobs:
       working-directory: ./terraform
       run: terraform destroy -input=false
     
-    - name: Aprove before apply
+    - name: Aprove before destroy
       uses: trstringer/manual-approval@v1
       with:
         secret: ${{ github.TOKEN }}
         approvers: gleitoncampos
         minimum-approvals: 1
-        issue-title: "Deploying"
-        issue-body: "Please approve or deny the deployment."
+        issue-title: "Destroying"
+        issue-body: "Please approve or deny the destroy."
         exclude-workflow-initiator-as-approver: false
         additional-approved-words: ''
         additional-denied-words: ''
 
  # On push to "master", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    #- name: Terraform Destroy
-    #  run: terraform destroy -auto-approve -input=false
+    - name: Terraform Destroy
+      working-directory: ./terraform
+      run: terraform destroy -auto-approve -input=false
