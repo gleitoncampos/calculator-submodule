@@ -45,14 +45,14 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
   policy = data.aws_iam_policy_document.bucket_policy_document.json
 }
 #upload website files to s3:
-resource "aws_s3_object" "object" {
-  bucket       = aws_s3_bucket.bucket.id
-  for_each     = fileset("${var.build_folder}", "*")
-  key          = "website/${each.value}"
-  source       = "${var.build_folder}/${each.value}"
-  etag         = filemd5("${var.build_folder}/${each.value}")
-  content_type = "text/html"
-  depends_on = [
-    aws_s3_bucket.bucket
-  ]
-}
+#resource "aws_s3_object" "object" {
+#  bucket       = aws_s3_bucket.bucket.id
+#  for_each     = fileset("${var.build_folder}", "*")
+#  key          = "website/${each.value}"
+#  source       = "${var.build_folder}/${each.value}"
+#  etag         = filemd5("${var.build_folder}/${each.value}")
+#  content_type = "text/html"
+#  depends_on = [
+#    aws_s3_bucket.bucket
+#  ]
+#}

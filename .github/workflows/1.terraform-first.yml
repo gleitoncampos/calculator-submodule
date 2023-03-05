@@ -1,0 +1,74 @@
+name: 'First Build & Deploy'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  statuses: write
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'us-east-1'
+
+jobs:
+
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: production
+    needs: build
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: build_folder
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      working-directory: ./terraform
+      run: terraform init 
+      
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      working-directory: ./terraform
+      run: terraform fmt -check
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      working-directory: ./terraform
+      run: terraform plan -input=false
+    
+    - name: Aprove before apply
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: gleitoncampos
+        minimum-approvals: 1
+        issue-title: "Deploying "
+        issue-body: "Please approve or deny the deployment."
+        exclude-workflow-initiator-as-approver: false
+        additional-approved-words: ''
+        additional-denied-words: ''
+
+ # On push to "master", build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
